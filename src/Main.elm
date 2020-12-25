@@ -1,52 +1,29 @@
 module Main exposing (main)
 
 import Playground exposing (..)
+import Playground3d exposing (..)
 
 
 main =
-    picture view
+    animation view
 
 
-view =
-    [ tree
-    , star |> moveUp 70 |> scale 0.75
-    , overlay
-    ]
+view time =
+    [ star |> rotate (spin 8 time) |> scale 5 ]
 
 
 star =
     group
-        [ smallSpike orange |> rotate 45
-        , smallSpike orange |> rotate 135
-        , smallSpike orange |> rotate 225
-        , smallSpike orange |> rotate 315
-        , largeSpike yellow
-        , largeSpike yellow |> rotate 90
-        , largeSpike yellow |> rotate 180
-        , largeSpike yellow |> rotate 270
+        [ smallSpike |> shape3dto2d camera1
+        , smallSpike |> shape3dto2d camera1 |> rotate 90
+        , smallSpike |> shape3dto2d camera1 |> rotate 180
+        , smallSpike |> shape3dto2d camera1 |> rotate 270
         ]
 
 
-smallSpike color =
-    polygon color [ ( -5, 0 ), ( 0, 30 ), ( 5, 0 ) ]
-
-
-largeSpike color =
-    polygon color [ ( -5, 0 ), ( 0, 50 ), ( 5, 0 ) ]
-
-
-tree =
-    group
-        [ rectangle brown 10 20 |> moveDown 125
-        , polygon darkGreen [ ( -20, 0 ), ( 0, 40 ), ( 20, 0 ) ]
-        , polygon darkGreen [ ( -40, 0 ), ( 0, 60 ), ( 40, 0 ) ] |> moveDown 40
-        , polygon darkGreen [ ( -70, 0 ), ( 0, 70 ), ( 70, 0 ) ] |> moveDown 80
-        , polygon darkGreen [ ( -100, 0 ), ( 0, 75 ), ( 100, 0 ) ] |> moveDown 120
-        ]
-
-
-overlay =
-    group
-        [ rectangle lightRed 200 400 |> fade 0.1 |> moveLeft 100
-        , rectangle lightBlue 200 400 |> fade 0.1 |> moveRight 100
+smallSpike =
+    group3d
+        [ polygon3d orange [ ( -50, 0, 0 ), ( 0, 100, 10 ), ( 50, 0, 0 ) ] |> fade3d 0.9
+        , polygon3d blue [ ( 50, 0, 0 ), ( 0, 100, 10 ), ( 0, 0, 20 ) ] |> fade3d 0.9
+        , polygon3d green [ ( 0, 0, 20 ), ( 0, 100, 10 ), ( -50, 0, 0 ) ] |> fade3d 0.9
         ]
