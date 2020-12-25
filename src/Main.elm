@@ -4,29 +4,49 @@ import Playground exposing (..)
 
 
 main =
-    game view update ( 0, 0 )
+    picture view
 
 
-view computer ( keyboardX, keyboardY ) =
-    [ circle yellow (wave 50 200 15 computer.time) |> moveRight 200 |> fade 0.5
-    , rectangle orange 20 200 |> moveX (wave 0 -240 10 computer.time) |> fade 0.9
-    , rectangle red 500 50 |> moveDown 200 |> rotate (zigzag -20 20 4 computer.time) |> fade 0.7
-    , square green 250 |> move -40 100 |> fade 0.4 |> rotate (spin 2 computer.time)
-    , pentagon purple 100 |> move 60 200 |> rotate 15 |> fade 0.3
-    , words (changeColor computer.mouse.down) "hallo" |> scale 10 |> moveX computer.mouse.x |> moveY computer.mouse.y
-    , image 96 96 "https://elm-lang.org/images/turtle.gif" |> move -200 -200 |> rotate 40 |> move keyboardX keyboardY
+view =
+    [ tree
+    , star |> moveUp 70 |> scale 0.75
+    , overlay
     ]
 
 
-update computer ( keyboardX, keyboardY ) =
-    ( keyboardX + toX computer.keyboard
-    , keyboardY + toY computer.keyboard
-    )
+star =
+    group
+        [ smallSpike orange |> rotate 45
+        , smallSpike orange |> rotate 135
+        , smallSpike orange |> rotate 225
+        , smallSpike orange |> rotate 315
+        , largeSpike yellow
+        , largeSpike yellow |> rotate 90
+        , largeSpike yellow |> rotate 180
+        , largeSpike yellow |> rotate 270
+        ]
 
 
-changeColor isMouseDown =
-    if isMouseDown then
-        orange
+smallSpike color =
+    polygon color [ ( -5, 0 ), ( 0, 30 ), ( 5, 0 ) ]
 
-    else
-        blue
+
+largeSpike color =
+    polygon color [ ( -5, 0 ), ( 0, 50 ), ( 5, 0 ) ]
+
+
+tree =
+    group
+        [ rectangle brown 10 20 |> moveDown 125
+        , polygon darkGreen [ ( -20, 0 ), ( 0, 40 ), ( 20, 0 ) ]
+        , polygon darkGreen [ ( -40, 0 ), ( 0, 60 ), ( 40, 0 ) ] |> moveDown 40
+        , polygon darkGreen [ ( -70, 0 ), ( 0, 70 ), ( 70, 0 ) ] |> moveDown 80
+        , polygon darkGreen [ ( -100, 0 ), ( 0, 75 ), ( 100, 0 ) ] |> moveDown 120
+        ]
+
+
+overlay =
+    group
+        [ rectangle lightRed 200 400 |> fade 0.1 |> moveLeft 100
+        , rectangle lightBlue 200 400 |> fade 0.1 |> moveRight 100
+        ]
