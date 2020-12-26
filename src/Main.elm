@@ -11,7 +11,7 @@ view time =
     [ tree
     , star |> moveUp 70 |> scale 0.75
     , overlay
-    , snow time
+    , snow time |> fade 0.9
     ]
 
 
@@ -68,15 +68,15 @@ snow time =
     in
     group
         [ row |> move (wave -3 3 1 time) (spacing * 5)
-        , row |> move (wave -3 3 1 time) (spacing * 4)
+        , row |> move (wave -3 3 1 time) (spacing * 4) |> moveLeft 10
         , row |> move (wave -3 3 1 time) (spacing * 3)
-        , row |> move (wave -3 3 1 time) (spacing * 2)
+        , row |> move (wave -3 3 1 time) (spacing * 2) |> moveLeft 10
         , row |> move (wave -3 3 1 time) (spacing * 1)
-        , row |> move (wave -3 3 1 time) (spacing * 0)
+        , row |> move (wave -3 3 1 time) (spacing * 0) |> moveLeft 10
         , row |> move (wave -3 3 1 time) (spacing * -1)
-        , row |> move (wave -3 3 1 time) (spacing * -2)
+        , row |> move (wave -3 3 1 time) (spacing * -2) |> moveLeft 10
         , row |> move (wave -3 3 1 time) (spacing * -3)
-        , row |> move (wave -3 3 1 time) (spacing * -4)
+        , row |> move (wave -3 3 1 time) (spacing * -4) |> moveLeft 10
         , row |> move (wave -3 3 1 time) (spacing * -5)
         ]
 
