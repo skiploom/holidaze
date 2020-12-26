@@ -4,13 +4,14 @@ import Playground exposing (..)
 
 
 main =
-    picture view
+    animation view
 
 
-view =
+view time =
     [ tree
     , star |> moveUp 70 |> scale 0.75
     , overlay
+    , snow time
     ]
 
 
@@ -42,6 +43,41 @@ tree =
         , polygon darkGreen [ ( -40, 0 ), ( 0, 60 ), ( 40, 0 ) ] |> moveDown 40
         , polygon darkGreen [ ( -70, 0 ), ( 0, 70 ), ( 70, 0 ) ] |> moveDown 80
         , polygon darkGreen [ ( -100, 0 ), ( 0, 75 ), ( 100, 0 ) ] |> moveDown 120
+        ]
+
+
+snow time =
+    let
+        spacing =
+            35
+
+        row =
+            group
+                [ circle white 3 |> move (spacing * -5) 0
+                , circle white 3 |> move (spacing * -4) 0
+                , circle white 3 |> move (spacing * -3) 0
+                , circle white 3 |> move (spacing * -2) 0
+                , circle white 3 |> move (spacing * -1) 0
+                , circle white 3
+                , circle white 3 |> move (spacing * 1) 0
+                , circle white 3 |> move (spacing * 2) 0
+                , circle white 3 |> move (spacing * 3) 0
+                , circle white 3 |> move (spacing * 4) 0
+                , circle white 3 |> move (spacing * 5) 0
+                ]
+    in
+    group
+        [ row |> move (wave -3 3 1 time) (spacing * 5)
+        , row |> move (wave -3 3 1 time) (spacing * 4)
+        , row |> move (wave -3 3 1 time) (spacing * 3)
+        , row |> move (wave -3 3 1 time) (spacing * 2)
+        , row |> move (wave -3 3 1 time) (spacing * 1)
+        , row |> move (wave -3 3 1 time) (spacing * 0)
+        , row |> move (wave -3 3 1 time) (spacing * -1)
+        , row |> move (wave -3 3 1 time) (spacing * -2)
+        , row |> move (wave -3 3 1 time) (spacing * -3)
+        , row |> move (wave -3 3 1 time) (spacing * -4)
+        , row |> move (wave -3 3 1 time) (spacing * -5)
         ]
 
 
