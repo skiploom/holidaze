@@ -4,14 +4,15 @@ import Playground exposing (..)
 
 
 main =
-    animation view
+    game view update ( -400, -400 )
 
 
-view time =
+view computer ( x, y ) =
     [ tree
     , star |> moveUp 70 |> scale 0.75
     , overlay
-    , snow time |> fade 0.9
+    , snow computer |> fade 0.9
+    , javad |> move x y
     ]
 
 
@@ -46,7 +47,7 @@ tree =
         ]
 
 
-snow time =
+snow computer =
     let
         spacing =
             35
@@ -67,17 +68,17 @@ snow time =
                 ]
     in
     group
-        [ row |> move (wave -3 3 1 time) (spacing * 5)
-        , row |> move (wave -3 3 1 time) (spacing * 4) |> moveLeft 10
-        , row |> move (wave -3 3 1 time) (spacing * 3)
-        , row |> move (wave -3 3 1 time) (spacing * 2) |> moveLeft 10
-        , row |> move (wave -3 3 1 time) (spacing * 1)
-        , row |> move (wave -3 3 1 time) (spacing * 0) |> moveLeft 10
-        , row |> move (wave -3 3 1 time) (spacing * -1)
-        , row |> move (wave -3 3 1 time) (spacing * -2) |> moveLeft 10
-        , row |> move (wave -3 3 1 time) (spacing * -3)
-        , row |> move (wave -3 3 1 time) (spacing * -4) |> moveLeft 10
-        , row |> move (wave -3 3 1 time) (spacing * -5)
+        [ row |> move (wave -3 3 1 computer.time) (spacing * 5)
+        , row |> move (wave -3 3 1 computer.time) (spacing * 4) |> moveLeft 10
+        , row |> move (wave -3 3 1 computer.time) (spacing * 3)
+        , row |> move (wave -3 3 1 computer.time) (spacing * 2) |> moveLeft 10
+        , row |> move (wave -3 3 1 computer.time) (spacing * 1)
+        , row |> move (wave -3 3 1 computer.time) (spacing * 0) |> moveLeft 10
+        , row |> move (wave -3 3 1 computer.time) (spacing * -1)
+        , row |> move (wave -3 3 1 computer.time) (spacing * -2) |> moveLeft 10
+        , row |> move (wave -3 3 1 computer.time) (spacing * -3)
+        , row |> move (wave -3 3 1 computer.time) (spacing * -4) |> moveLeft 10
+        , row |> move (wave -3 3 1 computer.time) (spacing * -5)
         ]
 
 
@@ -86,3 +87,13 @@ overlay =
         [ rectangle lightRed 200 400 |> fade 0.1 |> moveLeft 100
         , rectangle lightBlue 200 400 |> fade 0.1 |> moveRight 100
         ]
+
+
+javad =
+    image 96 96 "https://i.imgur.com/9Km48vO.png"
+
+
+update computer ( x, y ) =
+    ( x + toX computer.keyboard
+    , y + toY computer.keyboard
+    )
